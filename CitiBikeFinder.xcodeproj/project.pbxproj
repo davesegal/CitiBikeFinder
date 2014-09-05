@@ -31,6 +31,7 @@
 		443EABC519B2E0D7006495BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABC419B2E0D7006495BA /* QuartzCore.framework */; };
 		443EABC719B2E0E6006495BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABC619B2E0E6006495BA /* SystemConfiguration.framework */; };
 		443EABC919B2E298006495BA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABC819B2E298006495BA /* libz.dylib */; };
+		446B793819BA1B9C0066ED9E /* CBFStations+StationsSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B793719BA1B9C0066ED9E /* CBFStations+StationsSingleton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		443EABC419B2E0D7006495BA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		443EABC619B2E0E6006495BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		443EABC819B2E298006495BA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		446B793619BA1B9C0066ED9E /* CBFStations+StationsSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBFStations+StationsSingleton.h"; sourceTree = "<group>"; };
+		446B793719BA1B9C0066ED9E /* CBFStations+StationsSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBFStations+StationsSingleton.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 				443EABA519B2C726006495BA /* CBFStations.h */,
 				443EABA619B2C726006495BA /* CBFStations.m */,
 				443EABA719B2C726006495BA /* CBFStationsModels.h */,
+				446B793619BA1B9C0066ED9E /* CBFStations+StationsSingleton.h */,
+				446B793719BA1B9C0066ED9E /* CBFStations+StationsSingleton.m */,
 			);
 			path = StationsModel;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				443EAB8119B2C39C006495BA /* ViewController.m in Sources */,
 				443EABA819B2C726006495BA /* CBFNearbyStations.m in Sources */,
 				443EAB7E19B2C39C006495BA /* AppDelegate.m in Sources */,
+				446B793819BA1B9C0066ED9E /* CBFStations+StationsSingleton.m in Sources */,
 				443EABA919B2C726006495BA /* CBFResults.m in Sources */,
 				443EAB7B19B2C39C006495BA /* main.m in Sources */,
 			);
@@ -514,6 +520,7 @@
 				443EAB9719B2C39C006495BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		443EAB9819B2C39C006495BA /* Build configuration list for PBXNativeTarget "CitiBikeFinderTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +529,7 @@
 				443EAB9A19B2C39C006495BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

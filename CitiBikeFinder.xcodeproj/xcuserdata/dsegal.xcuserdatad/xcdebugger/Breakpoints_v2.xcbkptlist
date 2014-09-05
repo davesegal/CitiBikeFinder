@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CitiBikeFinder/ViewController.m"
-            timestampString = "431155109.890367"
+            timestampString = "431629076.653676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "-placeStationLocations"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

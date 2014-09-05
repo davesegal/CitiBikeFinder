@@ -7,7 +7,7 @@
 //
 
 #import "CBFApiRequest.h"
-#import "CBFStations.h"
+#import "CBFStations+StationsSingleton.h"
 
 @interface CBFApiRequest()
 {
@@ -45,7 +45,7 @@
                                                 {
                                                     NSError *jsonError = nil;
                                                     NSDictionary *stationsJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                                                    CBFStations *stationsModel = [[CBFStations alloc] initWithDictionary:stationsJSON];
+                                                    CBFStations *stationsModel = [[CBFStations sharedInstance] initWithDictionary:stationsJSON];
                                                     NSDate *update = [NSDate dateWithTimeIntervalSince1970:stationsModel.lastUpdate];
                                                     success(stationsModel);
                                                 }
