@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class CBFStations;
 
@@ -15,5 +16,7 @@
 +(instancetype)sharedInstance;
 
 -(void)getStations:(BOOL)updateOnly success:(void(^)(CBFStations *))success failure:(void(^)(NSError *))failure;
+
+-(void)findDistancesForOrigin:(CLLocationCoordinate2D)origin withMode:(NSString *)mode completionSuccess:(void(^)(id))success completionFailure:(void(^)(NSError *))failure;
 
 @end

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CitiBikeFinder/ViewController.m"
-            timestampString = "431629076.653676"
+            filePath = "CitiBikeFinder/CBFApiRequest.m"
+            timestampString = "431725586.028252"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-placeStationLocations"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-findDistancesForOrigin:withMode:completionSuccess:completionFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

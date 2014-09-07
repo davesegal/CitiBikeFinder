@@ -32,6 +32,12 @@
 		443EABC719B2E0E6006495BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABC619B2E0E6006495BA /* SystemConfiguration.framework */; };
 		443EABC919B2E298006495BA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABC819B2E298006495BA /* libz.dylib */; };
 		446B793819BA1B9C0066ED9E /* CBFStations+StationsSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B793719BA1B9C0066ED9E /* CBFStations+StationsSingleton.m */; };
+		446B794519BCA4500066ED9E /* CBFDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B793B19BCA4500066ED9E /* CBFDistance.m */; };
+		446B794619BCA4500066ED9E /* CBFDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B793D19BCA4500066ED9E /* CBFDuration.m */; };
+		446B794719BCA4500066ED9E /* CBFElements.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B793F19BCA4500066ED9E /* CBFElements.m */; };
+		446B794819BCA4500066ED9E /* CBFRows.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794119BCA4500066ED9E /* CBFRows.m */; };
+		446B794919BCA4500066ED9E /* CBFStationDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794319BCA4500066ED9E /* CBFStationDistance.m */; };
+		446B794C19BCA4C10066ED9E /* CBFApiKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794B19BCA4C10066ED9E /* CBFApiKeys.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +88,19 @@
 		443EABC819B2E298006495BA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		446B793619BA1B9C0066ED9E /* CBFStations+StationsSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBFStations+StationsSingleton.h"; sourceTree = "<group>"; };
 		446B793719BA1B9C0066ED9E /* CBFStations+StationsSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBFStations+StationsSingleton.m"; sourceTree = "<group>"; };
+		446B793A19BCA4500066ED9E /* CBFDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFDistance.h; sourceTree = "<group>"; };
+		446B793B19BCA4500066ED9E /* CBFDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFDistance.m; sourceTree = "<group>"; };
+		446B793C19BCA4500066ED9E /* CBFDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFDuration.h; sourceTree = "<group>"; };
+		446B793D19BCA4500066ED9E /* CBFDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFDuration.m; sourceTree = "<group>"; };
+		446B793E19BCA4500066ED9E /* CBFElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFElements.h; sourceTree = "<group>"; };
+		446B793F19BCA4500066ED9E /* CBFElements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFElements.m; sourceTree = "<group>"; };
+		446B794019BCA4500066ED9E /* CBFRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFRows.h; sourceTree = "<group>"; };
+		446B794119BCA4500066ED9E /* CBFRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFRows.m; sourceTree = "<group>"; };
+		446B794219BCA4500066ED9E /* CBFStationDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStationDistance.h; sourceTree = "<group>"; };
+		446B794319BCA4500066ED9E /* CBFStationDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFStationDistance.m; sourceTree = "<group>"; };
+		446B794419BCA4500066ED9E /* CBFStationDistanceModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStationDistanceModels.h; sourceTree = "<group>"; };
+		446B794A19BCA4C10066ED9E /* CBFApiKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFApiKeys.h; sourceTree = "<group>"; };
+		446B794B19BCA4C10066ED9E /* CBFApiKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFApiKeys.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,16 +156,19 @@
 		443EAB7719B2C39C006495BA /* CitiBikeFinder */ = {
 			isa = PBXGroup;
 			children = (
+				446B793919BCA4500066ED9E /* DistancesModel */,
 				443EABA019B2C726006495BA /* StationsModel */,
 				443EAB7C19B2C39C006495BA /* AppDelegate.h */,
 				443EAB7D19B2C39C006495BA /* AppDelegate.m */,
 				443EAB7F19B2C39C006495BA /* ViewController.h */,
 				443EAB8019B2C39C006495BA /* ViewController.m */,
+				443EAB9D19B2C420006495BA /* CBFApiRequest.h */,
+				443EAB9E19B2C420006495BA /* CBFApiRequest.m */,
 				443EAB8219B2C39C006495BA /* Main.storyboard */,
 				443EAB8519B2C39C006495BA /* Images.xcassets */,
 				443EAB7819B2C39C006495BA /* Supporting Files */,
-				443EAB9D19B2C420006495BA /* CBFApiRequest.h */,
-				443EAB9E19B2C420006495BA /* CBFApiRequest.m */,
+				446B794A19BCA4C10066ED9E /* CBFApiKeys.h */,
+				446B794B19BCA4C10066ED9E /* CBFApiKeys.m */,
 			);
 			path = CitiBikeFinder;
 			sourceTree = "<group>";
@@ -212,6 +234,24 @@
 				443EABAF19B2DFD4006495BA /* GoogleMaps.bundle */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		446B793919BCA4500066ED9E /* DistancesModel */ = {
+			isa = PBXGroup;
+			children = (
+				446B793A19BCA4500066ED9E /* CBFDistance.h */,
+				446B793B19BCA4500066ED9E /* CBFDistance.m */,
+				446B793C19BCA4500066ED9E /* CBFDuration.h */,
+				446B793D19BCA4500066ED9E /* CBFDuration.m */,
+				446B793E19BCA4500066ED9E /* CBFElements.h */,
+				446B793F19BCA4500066ED9E /* CBFElements.m */,
+				446B794019BCA4500066ED9E /* CBFRows.h */,
+				446B794119BCA4500066ED9E /* CBFRows.m */,
+				446B794219BCA4500066ED9E /* CBFStationDistance.h */,
+				446B794319BCA4500066ED9E /* CBFStationDistance.m */,
+				446B794419BCA4500066ED9E /* CBFStationDistanceModels.h */,
+			);
+			path = DistancesModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,14 +354,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				446B794919BCA4500066ED9E /* CBFStationDistance.m in Sources */,
 				443EABAA19B2C726006495BA /* CBFStations.m in Sources */,
+				446B794619BCA4500066ED9E /* CBFDuration.m in Sources */,
 				443EAB9F19B2C420006495BA /* CBFApiRequest.m in Sources */,
 				443EAB8119B2C39C006495BA /* ViewController.m in Sources */,
 				443EABA819B2C726006495BA /* CBFNearbyStations.m in Sources */,
+				446B794C19BCA4C10066ED9E /* CBFApiKeys.m in Sources */,
 				443EAB7E19B2C39C006495BA /* AppDelegate.m in Sources */,
+				446B794819BCA4500066ED9E /* CBFRows.m in Sources */,
 				446B793819BA1B9C0066ED9E /* CBFStations+StationsSingleton.m in Sources */,
 				443EABA919B2C726006495BA /* CBFResults.m in Sources */,
 				443EAB7B19B2C39C006495BA /* main.m in Sources */,
+				446B794519BCA4500066ED9E /* CBFDistance.m in Sources */,
+				446B794719BCA4500066ED9E /* CBFElements.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

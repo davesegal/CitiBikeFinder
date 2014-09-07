@@ -70,11 +70,11 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    CLLocation *location = [locations lastObject];
+    lastLocation = [locations lastObject];
     
-    NSLog(@"new location %@", location);
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude
-                                                            longitude:location.coordinate.longitude
+    NSLog(@"new location %@", lastLocation);
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:lastLocation.coordinate.latitude
+                                                            longitude:lastLocation.coordinate.longitude
                                                                  zoom:6];
     googleMapView = [GMSMapView mapWithFrame:self.mapView.frame camera:camera];
     googleMapView.myLocationEnabled = YES;
@@ -118,6 +118,7 @@
     
     CBFStations *stations = [CBFStations sharedInstance];
     
+    double count = 0;
     
     for (CBFResults *result in stations.results)
     {
@@ -129,8 +130,36 @@
             marker.title = result.stationAddress;
             marker.flat = YES;
             marker.map = googleMapView;
+            ++count;
         }
     }
+    
+    NSLog(@"Number of locations %f", count);
+}
+
+-(void)getCloseLocation
+{
+//    NSArray *testLocations = @[ [[CLLocation alloc] initWithLatitude:11.2233 longitude:13.2244], ... ];
+//    
+//    CLLocationDistance maxRadius = 30; // in meters
+//    CLLocation *targetLocation = [[CLLocation alloc] initWithLatitude:51.5028 longitude:0.0031];
+//    
+//    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(CLLocation *testLocation, NSDictionary *bindings) {
+//        return ([testLocation distanceFromLocation:targetLocation] <= maxRadius);
+//    }];
+//    
+//    NSArray *closeLocations = [testLocations filteredArrayUsingPredicate:predicate];
+}
+
+- (IBAction)findClosestStations:(id)sender
+{
+    CLLocationCoordinate2D loc = {lastLocation.coordinate.latitude, lastLocation.coordinate.longitude};
+    [[CBFApiRequest sharedInstance] findDistancesForOrigin:loc  withMode:@"walking" completionSuccess:^(id data) {
+        
+    } completionFailure:^(NSError *error) {
+        
+    }];
+
 }
 
 
