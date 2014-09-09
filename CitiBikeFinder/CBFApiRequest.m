@@ -7,7 +7,7 @@
 //
 
 #import "CBFApiRequest.h"
-#import "CBFStations+StationsSingleton.h"
+
 #import "CBFStationsModels.h"
 #import "CBFApiKeys.h"
 
@@ -19,10 +19,6 @@
 @end
 
 @implementation CBFApiRequest
-
-//http://appservices.citibikenyc.com/data2/stations.php
-
-//http://appservices.citibikenyc.com/data2/stations.php?updateOnly=true
 
 
 +(instancetype)sharedInstance
@@ -47,8 +43,8 @@
                                                 {
                                                     NSError *jsonError = nil;
                                                     NSDictionary *stationsJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                                                    CBFStations *stationsModel = [[CBFStations sharedInstance] initWithDictionary:stationsJSON];
-                                                    NSDate *update = [NSDate dateWithTimeIntervalSince1970:stationsModel.lastUpdate];
+                                                    CBFStations *stationsModel = [[CBFStations alloc] initWithDictionary:stationsJSON];
+                                                    //NSDate *update = [NSDate dateWithTimeIntervalSince1970:stationsModel.lastUpdate];
                                                     success(stationsModel);
                                                 }
                                                 else
@@ -61,10 +57,9 @@
     
 }
 
--(void)findDistancesForOrigin:(CLLocationCoordinate2D)origin withMode:(NSString *)mode completionSuccess:(void(^)(id))success completionFailure:(void(^)(NSError *))failure
+-(void)findDistancesFromOrigin:(CLLocationCoordinate2D)origin toStations:(CBFStations *)stations withMode:(NSString *)mode completionSuccess:(void(^)(id))success completionFailure:(void(^)(NSError *))failure
 {
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://maps.googleapis.com/maps/api/distancematrix/json?key=%@&units=imperial&mode=walking&origins=%f,%f&destinations=", CBFApiKeyGoogleDistanceMatrix, origin.latitude, origin.longitude ];
-    CBFStations *stations = [CBFStations sharedInstance];
     for (int index = 0; index < 5 && index < [stations.results count]; index++)
     {
         CBFResults *results = stations.results[index];
@@ -81,7 +76,7 @@
         {
             NSError *jsonError = nil;
             NSDictionary *distances = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-            NSLog(@"success");
+            NSLog(@"success %@", distances);
         }
         else
         {

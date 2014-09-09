@@ -9,7 +9,7 @@
 #import "CBFMapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "CBFApiRequest.h"
-#import "CBFStations+StationsSingleton.h"
+//#import "CBFStations+StationsSingleton.h"
 #import "CBFStationsModels.h"
 
 typedef NS_ENUM(NSInteger, CBFTravelMode)
@@ -49,27 +49,12 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
         //[locationManager startMonitoringSignificantLocationChanges];
         [locationManager startUpdatingLocation];
     }
-    CBFMapViewController __block *blockself = self;
-    [[CBFApiRequest sharedInstance] getStations:NO success:^(CBFStations *stations)
-    {
-        if (blockself)
-        {
-            [blockself placeStationLocations];
-        }
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            [self placeStationLocations];
-//        });
-    } failure:^(NSError *error)
-    {
-        
-        
-    }];
-
+    
+    [self getStationData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -95,17 +80,9 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     
     [self.mapView addSubview:googleMapView];
     
-    [self placeStationLocations];
-
+    //[self placeStationLocations:];
     
     lastLocation = [locations lastObject];
-
-//    GMSMarker *marker = [[GMSMarker alloc] init];
-//    marker.position = location.coordinate;
-//    marker.title = @"My location";
-//    marker.snippet = @"biking";
-//    marker.map = googleMapView;
-
 
 }
 
@@ -123,15 +100,31 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     
 }
 
--(void)placeStationLocations
+-(void)getStationData
+{
+    CBFMapViewController __block *blockself = self;
+    [[CBFApiRequest sharedInstance] getStations:NO success:^(CBFStations *stations)
+     {
+         if (blockself)
+         {
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 [blockself placeStationLocations:stations];
+                 [blockself sortClosestStations:stations];
+             });
+             
+         }
+         //
+     } failure:^(NSError *error)
+     {
+         
+         
+     }];
+}
+
+-(void)placeStationLocations:(CBFStations *)stations
 {
     GMSVisibleRegion visibleRegion = [googleMapView.projection visibleRegion];
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc]initWithRegion:visibleRegion];
-    //GMSMarker *resultMarker = [[GMSMarker alloc]init];
-    
-    
-    //TODO: - temp fix ... there is a bug where the array gets updated in singleton during enumeration that you need to fix
-    CBFStations *stations = [[CBFStations sharedInstance] copy];
     
     double count = 0;
     
@@ -152,13 +145,10 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     NSLog(@"Number of locations %f", count);
 }
 
--(void)sortClosestStations
+-(void)sortClosestStations:(CBFStations *)stations
 {
     NSMutableArray *stationsArray = [NSMutableArray array];
     CLLocation __block *targetLocation = [[CLLocation alloc] initWithLatitude:lastLocation.coordinate.latitude longitude:lastLocation.coordinate.longitude];
-    
-    //TODO: - temp fix ... there is a bug where the array gets updated in singleton during enumeration that you need to fix
-    CBFStations *stations = [[CBFStations sharedInstance] copy];
     
     for (CBFResults *result in stations.results)
     {
@@ -187,36 +177,54 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 
     }];
     
+    self.closestStations = [NSArray array];
     self.closestStations = [sortedStations copy];
     [self.closestStationTableView reloadData];
-}
-
-
-
-- (IBAction)findClosestStations:(id)sender
-{
-    [self sortClosestStations];
 }
 
 -(void)getDirectionsToLocation
 {
     //TODO: implement on selection google api to get distances
-    CLLocationCoordinate2D loc = {lastLocation.coordinate.latitude, lastLocation.coordinate.longitude};
-    [[CBFApiRequest sharedInstance] findDistancesForOrigin:loc  withMode:@"walking" completionSuccess:^(id data) {
-        
-    } completionFailure:^(NSError *error) {
-        
-    }];
+//    CLLocationCoordinate2D loc = {lastLocation.coordinate.latitude, lastLocation.coordinate.longitude};
+//    [[CBFApiRequest sharedInstance] findDistancesForOrigin:loc  withMode:@"walking" completionSuccess:^(id data) {
+//        
+//    } completionFailure:^(NSError *error) {
+//        
+//    }];
 }
+
+#pragma mark - UIButton actions
+
+- (IBAction)findClosestStations:(id)sender
+{
+    [self getStationData];
+}
+
+
+
+#pragma mark - UISegmentedControl action
 
 - (IBAction)travelStateChanged:(id)sender
 {
     if(self.travelStateControl.selectedSegmentIndex != mode)
     {
+        [locationManager startUpdatingLocation];
         mode = self.travelStateControl.selectedSegmentIndex;
-        
+        [self getStationData];
     }
 }
+
+#pragma mark - UITableViewDelegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [locationManager stopUpdatingLocation];
+    CBFResults *result = self.closestStations[indexPath.row];
+    [googleMapView animateToLocation:CLLocationCoordinate2DMake(result.latitude, result.longitude)];
+}
+
+
+#pragma mark - UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

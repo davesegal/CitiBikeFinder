@@ -17,6 +17,6 @@
 
 -(void)getStations:(BOOL)updateOnly success:(void(^)(CBFStations *))success failure:(void(^)(NSError *))failure;
 
--(void)findDistancesForOrigin:(CLLocationCoordinate2D)origin withMode:(NSString *)mode completionSuccess:(void(^)(id))success completionFailure:(void(^)(NSError *))failure;
+-(void)findDistancesFromOrigin:(CLLocationCoordinate2D)origin toStations:(CBFStations *)stations withMode:(NSString *)mode completionSuccess:(void(^)(id))success completionFailure:(void(^)(NSError *))failure;
 
 @end
