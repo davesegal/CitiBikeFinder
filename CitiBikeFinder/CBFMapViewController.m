@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 }
 @property (weak, nonatomic) IBOutlet UISegmentedControl *travelStateControl;
 @property (strong, nonatomic) NSArray *closestStations;
+@property (strong, nonatomic) CBFStations *allStations;
 @end
 
 @implementation CBFMapViewController
@@ -80,7 +81,8 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     
     [self.mapView addSubview:googleMapView];
     
-    //[self placeStationLocations:];
+    if (self.allStations)
+        [self placeStationLocations:self.allStations highlightResult:nil];
     
     lastLocation = [locations lastObject];
 
@@ -108,7 +110,8 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
          if (blockself)
          {
              dispatch_sync(dispatch_get_main_queue(), ^{
-                 [blockself placeStationLocations:stations];
+                 blockself.allStations = stations;
+                 [blockself placeStationLocations:stations highlightResult:nil];
                  [blockself sortClosestStations:stations];
              });
              
@@ -121,8 +124,10 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
      }];
 }
 
--(void)placeStationLocations:(CBFStations *)stations
+-(void)placeStationLocations:(CBFStations *)stations highlightResult:(CBFResults *)selectedStation
 {
+    [googleMapView clear];
+    
     GMSVisibleRegion visibleRegion = [googleMapView.projection visibleRegion];
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc]initWithRegion:visibleRegion];
     
@@ -138,6 +143,11 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
             marker.title = result.stationAddress;
             marker.flat = YES;
             marker.map = googleMapView;
+            if([result.label isEqualToString:selectedStation.label])
+                marker.icon = [GMSMarker markerImageWithColor:[UIColor blueColor]];
+            else if (selectedStation)
+                marker.icon = [GMSMarker markerImageWithColor:[UIColor blackColor]];
+
             ++count;
         }
     }
@@ -224,6 +234,7 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     [locationManager stopUpdatingLocation];
     CBFResults *result = self.closestStations[indexPath.row];
     [googleMapView animateToLocation:CLLocationCoordinate2DMake(result.latitude, result.longitude)];
+    [self placeStationLocations:self.allStations highlightResult:result];
 }
 
 

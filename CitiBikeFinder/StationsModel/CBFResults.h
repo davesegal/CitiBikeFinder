@@ -20,6 +20,7 @@
 @property (nonatomic, assign) double latitude;
 @property (nonatomic, strong) NSString *label;
 @property (nonatomic, strong) NSArray *nearbyStations;
+@property (nonatomic, assign) double distanceFromOrigin;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
