@@ -197,6 +197,8 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 
 - (IBAction)findClosestStations:(id)sender
 {
+    [googleMapView animateToLocation:lastLocation.coordinate];
+    [locationManager startUpdatingLocation];
     [self getStationData];
 }
 
@@ -208,6 +210,7 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 {
     if(self.travelStateControl.selectedSegmentIndex != mode)
     {
+        [googleMapView animateToLocation:lastLocation.coordinate];
         [locationManager startUpdatingLocation];
         mode = self.travelStateControl.selectedSegmentIndex;
         [self getStationData];
