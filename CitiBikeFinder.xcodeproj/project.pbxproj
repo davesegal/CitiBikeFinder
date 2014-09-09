@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		443EAB7B19B2C39C006495BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB7A19B2C39C006495BA /* main.m */; };
 		443EAB7E19B2C39C006495BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB7D19B2C39C006495BA /* AppDelegate.m */; };
-		443EAB8119B2C39C006495BA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB8019B2C39C006495BA /* ViewController.m */; };
+		443EAB8119B2C39C006495BA /* CBFMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB8019B2C39C006495BA /* CBFMapViewController.m */; };
 		443EAB8419B2C39C006495BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443EAB8219B2C39C006495BA /* Main.storyboard */; };
 		443EAB8619B2C39C006495BA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443EAB8519B2C39C006495BA /* Images.xcassets */; };
 		443EAB9219B2C39C006495BA /* CitiBikeFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB9119B2C39C006495BA /* CitiBikeFinderTests.m */; };
@@ -56,8 +56,8 @@
 		443EAB7A19B2C39C006495BA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		443EAB7C19B2C39C006495BA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		443EAB7D19B2C39C006495BA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		443EAB7F19B2C39C006495BA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		443EAB8019B2C39C006495BA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		443EAB7F19B2C39C006495BA /* CBFMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBFMapViewController.h; sourceTree = "<group>"; };
+		443EAB8019B2C39C006495BA /* CBFMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CBFMapViewController.m; sourceTree = "<group>"; };
 		443EAB8319B2C39C006495BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		443EAB8519B2C39C006495BA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		443EAB8B19B2C39C006495BA /* CitiBikeFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitiBikeFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,8 +160,8 @@
 				443EABA019B2C726006495BA /* StationsModel */,
 				443EAB7C19B2C39C006495BA /* AppDelegate.h */,
 				443EAB7D19B2C39C006495BA /* AppDelegate.m */,
-				443EAB7F19B2C39C006495BA /* ViewController.h */,
-				443EAB8019B2C39C006495BA /* ViewController.m */,
+				443EAB7F19B2C39C006495BA /* CBFMapViewController.h */,
+				443EAB8019B2C39C006495BA /* CBFMapViewController.m */,
 				443EAB9D19B2C420006495BA /* CBFApiRequest.h */,
 				443EAB9E19B2C420006495BA /* CBFApiRequest.m */,
 				443EAB8219B2C39C006495BA /* Main.storyboard */,
@@ -358,7 +358,7 @@
 				443EABAA19B2C726006495BA /* CBFStations.m in Sources */,
 				446B794619BCA4500066ED9E /* CBFDuration.m in Sources */,
 				443EAB9F19B2C420006495BA /* CBFApiRequest.m in Sources */,
-				443EAB8119B2C39C006495BA /* ViewController.m in Sources */,
+				443EAB8119B2C39C006495BA /* CBFMapViewController.m in Sources */,
 				443EABA819B2C726006495BA /* CBFNearbyStations.m in Sources */,
 				446B794C19BCA4C10066ED9E /* CBFApiKeys.m in Sources */,
 				443EAB7E19B2C39C006495BA /* AppDelegate.m in Sources */,
