@@ -6,7 +6,7 @@
 //
 
 #import "CBFStations.h"
-#import "CBFResults.h"
+#import "CBFStationData.h"
 
 
 NSString *const kCBFStationsActiveStations = @"activeStations";
@@ -25,12 +25,7 @@ NSString *const kCBFStationsLastUpdate = @"lastUpdate";
 
 @implementation CBFStations
 
-@synthesize activeStations = _activeStations;
-@synthesize meta = _meta;
-@synthesize results = _results;
-@synthesize ok = _ok;
-@synthesize totalStations = _totalStations;
-@synthesize lastUpdate = _lastUpdate;
+
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -52,11 +47,11 @@ NSString *const kCBFStationsLastUpdate = @"lastUpdate";
     if ([receivedCBFResults isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in (NSArray *)receivedCBFResults) {
             if ([item isKindOfClass:[NSDictionary class]]) {
-                [parsedCBFResults addObject:[CBFResults modelObjectWithDictionary:item]];
+                [parsedCBFResults addObject:[CBFStationData modelObjectWithDictionary:item]];
             }
        }
     } else if ([receivedCBFResults isKindOfClass:[NSDictionary class]]) {
-       [parsedCBFResults addObject:[CBFResults modelObjectWithDictionary:(NSDictionary *)receivedCBFResults]];
+       [parsedCBFResults addObject:[CBFStationData modelObjectWithDictionary:(NSDictionary *)receivedCBFResults]];
     }
 
     self.results = [NSArray arrayWithArray:parsedCBFResults];

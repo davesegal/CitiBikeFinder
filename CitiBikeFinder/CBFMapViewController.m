@@ -9,25 +9,27 @@
 #import "CBFMapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "CBFApiRequest.h"
-//#import "CBFStations+StationsSingleton.h"
 #import "CBFStationsModels.h"
+#import <MapKit/MapKit.h>
 
 typedef NS_ENUM(NSInteger, CBFTravelMode)
 {
     CBFTravelModeWalking,
-    CBFTravelModeBiking
+    CBFTravelModeBiking,
+    CBFTravelModeShowAll
 };
 
-@interface CBFMapViewController ()
-{
-    GMSMapView *googleMapView;
-    CLLocationManager *locationManager;
-    CLLocation *lastLocation;
-    CBFTravelMode mode;
-}
+@interface CBFMapViewController()
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *travelStateControl;
 @property (strong, nonatomic) NSArray *closestStations;
 @property (strong, nonatomic) CBFStations *allStations;
+@property (strong, nonatomic) NSMutableDictionary *markers;
+@property (assign, nonatomic) CBFTravelMode mode;
+@property (strong, nonatomic) GMSMapView *googleMapView;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation *lastLocation;
+
 @end
 
 @implementation CBFMapViewController
@@ -35,20 +37,22 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    mode = self.travelStateControl.selectedSegmentIndex;
+    self.mode = self.travelStateControl.selectedSegmentIndex;
     
     self.closestStations = [NSArray array];
+    self.markers = [NSMutableDictionary dictionary];
     
     self.closestStationTableView.delegate = self;
     self.closestStationTableView.dataSource = self;
     
     if([CLLocationManager locationServicesEnabled])
     {
-        locationManager = [[CLLocationManager alloc] init];
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationManager.delegate = self;
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.delegate = self;
         //[locationManager startMonitoringSignificantLocationChanges];
-        [locationManager startUpdatingLocation];
+        self.locationManager.distanceFilter = 50;
+        [self.locationManager startUpdatingLocation];
     }
     
     [self getStationData];
@@ -61,30 +65,30 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currentLocation = [locations lastObject];
-    if (lastLocation.coordinate.longitude == currentLocation.coordinate.longitude && lastLocation.coordinate.latitude == currentLocation.coordinate.latitude)
+    if (self.lastLocation.coordinate.longitude == currentLocation.coordinate.longitude && self.lastLocation.coordinate.latitude == currentLocation.coordinate.latitude)
         return;
     
-    NSLog(@"new location %@", lastLocation);
+    //NSLog(@"new location %@", self.lastLocation);
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude
                                                             longitude:currentLocation.coordinate.longitude
                                                                  zoom:6];
-    if (!googleMapView)
+    if (!self.googleMapView)
     {
-        googleMapView = [GMSMapView mapWithFrame:self.mapView.frame camera:camera];
-        googleMapView.myLocationEnabled = YES;
-        [googleMapView animateToZoom:16];
+        self.googleMapView = [GMSMapView mapWithFrame:self.mapView.frame camera:camera];
+        self.googleMapView.myLocationEnabled = YES;
+        [self.googleMapView animateToZoom:16];
     }
     else
     {
-        [googleMapView animateToLocation:currentLocation.coordinate];
+        [self.googleMapView animateToLocation:currentLocation.coordinate];
     }
     
-    [self.mapView addSubview:googleMapView];
+    [self.mapView addSubview:self.googleMapView];
     
     if (self.allStations)
         [self placeStationLocations:self.allStations highlightResult:nil];
     
-    lastLocation = [locations lastObject];
+    self.lastLocation = [locations lastObject];
 
 }
 
@@ -109,11 +113,9 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
      {
          if (blockself)
          {
-             dispatch_sync(dispatch_get_main_queue(), ^{
-                 blockself.allStations = stations;
-                 [blockself placeStationLocations:stations highlightResult:nil];
-                 [blockself sortClosestStations:stations];
-             });
+             blockself.allStations = stations;
+             [blockself placeStationLocations:stations highlightResult:nil];
+             [blockself sortClosestStations:stations];
              
          }
          //
@@ -124,30 +126,44 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
      }];
 }
 
--(void)placeStationLocations:(CBFStations *)stations highlightResult:(CBFResults *)selectedStation
+-(void)placeStationLocations:(CBFStations *)stations highlightResult:(CBFStationData *)selectedStationData
 {
-    [googleMapView clear];
     
-    GMSVisibleRegion visibleRegion = [googleMapView.projection visibleRegion];
+    GMSVisibleRegion visibleRegion = [self.googleMapView.projection visibleRegion];
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc]initWithRegion:visibleRegion];
     
     double count = 0;
     
-    for (CBFResults *result in stations.results)
+    for (CBFStationData *stationData in stations.results)
     {
-        CLLocationCoordinate2D location = {result.latitude, result.longitude};
+        CLLocationCoordinate2D coordinate = {stationData.latitude, stationData.longitude};
+        NSValue *key = [NSValue valueWithMKCoordinate:coordinate];
         //resultMarker = [markerArray objectAtIndex:i];
-        if ([bounds containsCoordinate:location])
+        if ([bounds containsCoordinate:coordinate])
         {
-            GMSMarker *marker = [GMSMarker markerWithPosition:location];
-            marker.title = result.stationAddress;
+            GMSMarker *marker = nil;
+            if (self.markers[key])
+            {
+                marker = self.markers[key];
+            }
+            else
+            {
+                marker = [GMSMarker markerWithPosition:coordinate];
+                [self.markers setObject:marker forKey:key];
+            }
+            
+            marker.title = stationData.stationAddress;
             marker.flat = YES;
-            marker.map = googleMapView;
-            if([result.label isEqualToString:selectedStation.label])
+            marker.map = self.googleMapView;
+            if([stationData.label isEqualToString:selectedStationData.label])
+            {
                 marker.icon = [GMSMarker markerImageWithColor:[UIColor blueColor]];
-            else if (selectedStation)
-                marker.icon = [GMSMarker markerImageWithColor:[UIColor blackColor]];
-
+            }
+            else
+            {
+                marker.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
+            }
+            marker.opacity = ([self isStationAvailable:stationData]) ? 1.0 : 0.3;
             ++count;
         }
     }
@@ -158,11 +174,11 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 -(void)sortClosestStations:(CBFStations *)stations
 {
     NSMutableArray *stationsArray = [NSMutableArray array];
-    CLLocation __block *targetLocation = [[CLLocation alloc] initWithLatitude:lastLocation.coordinate.latitude longitude:lastLocation.coordinate.longitude];
+    CLLocation __block *targetLocation = [[CLLocation alloc] initWithLatitude:self.lastLocation.coordinate.latitude longitude:self.lastLocation.coordinate.longitude];
     
-    for (CBFResults *result in stations.results)
+    for (CBFStationData *result in stations.results)
     {
-        if ([result.status isEqualToString:@"Active"] && ((mode == CBFTravelModeWalking && result.availableBikes > 0) || (mode == CBFTravelModeBiking && result.availableDocks > 0)))
+        if ([result.status isEqualToString:@"Active"] && ((self.mode == CBFTravelModeWalking && result.availableBikes > 0) || (self.mode == CBFTravelModeBiking && result.availableDocks > 0)))
         {
             [stationsArray addObject:result];
         }
@@ -170,8 +186,8 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     
     NSArray *sortedStations = [stationsArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
     {
-        CBFResults *result1 = (CBFResults *)obj1;
-        CBFResults *result2 = (CBFResults *)obj2;
+        CBFStationData *result1 = (CBFStationData *)obj1;
+        CBFStationData *result2 = (CBFStationData *)obj2;
         CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:result1.latitude longitude:result1.longitude];
         CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:result2.latitude longitude:result2.longitude];
         
@@ -184,7 +200,7 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
             return (NSComparisonResult)NSOrderedDescending;
         else
             return (NSComparisonResult)NSOrderedSame;
-
+        
     }];
     
     self.closestStations = [NSArray array];
@@ -203,12 +219,33 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 //    }];
 }
 
+
+-(BOOL)isStationAvailable:(CBFStationData *)stationData
+{
+    if (![stationData.status isEqualToString:@"Active"])
+    {
+        return NO;
+    }
+    
+    if (self.mode == CBFTravelModeBiking && stationData.availableDocks > 0)
+    {
+        return YES;
+    }
+    
+    if (self.mode == CBFTravelModeWalking && stationData.availableBikes > 0)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark - UIButton actions
 
 - (IBAction)findClosestStations:(id)sender
 {
-    [googleMapView animateToLocation:lastLocation.coordinate];
-    [locationManager startUpdatingLocation];
+    [self.googleMapView animateToLocation:self.lastLocation.coordinate];
+    [self.locationManager startUpdatingLocation];
     [self getStationData];
 }
 
@@ -218,11 +255,11 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 
 - (IBAction)travelStateChanged:(id)sender
 {
-    if(self.travelStateControl.selectedSegmentIndex != mode)
+    if(self.travelStateControl.selectedSegmentIndex != self.mode)
     {
-        [googleMapView animateToLocation:lastLocation.coordinate];
-        [locationManager startUpdatingLocation];
-        mode = self.travelStateControl.selectedSegmentIndex;
+        [self.googleMapView animateToLocation:self.lastLocation.coordinate];
+        [self.locationManager startUpdatingLocation];
+        self.mode = self.travelStateControl.selectedSegmentIndex;
         [self getStationData];
     }
 }
@@ -231,10 +268,10 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [locationManager stopUpdatingLocation];
-    CBFResults *result = self.closestStations[indexPath.row];
-    [googleMapView animateToLocation:CLLocationCoordinate2DMake(result.latitude, result.longitude)];
-    [self placeStationLocations:self.allStations highlightResult:result];
+    [self.locationManager stopUpdatingLocation];
+    CBFStationData *stationData = self.closestStations[indexPath.row];
+    [self.googleMapView animateToLocation:CLLocationCoordinate2DMake(stationData.latitude, stationData.longitude)];
+    [self placeStationLocations:self.allStations highlightResult:stationData];
 }
 
 
@@ -255,15 +292,15 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
         cell.selectionStyle = UITableViewCellStyleSubtitle;
     }
     
-    CBFResults *result = self.closestStations[indexPath.row];
+    CBFStationData *result = self.closestStations[indexPath.row];
     
     cell.textLabel.text = result.label;
     
-    if (mode == CBFTravelModeBiking)
+    if (self.mode == CBFTravelModeBiking)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"docks available: %d", (int)result.availableDocks];
     }
-    else if (mode == CBFTravelModeWalking)
+    else if (self.mode == CBFTravelModeWalking)
     {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"bikes available: %d", (int)result.availableBikes];
     }

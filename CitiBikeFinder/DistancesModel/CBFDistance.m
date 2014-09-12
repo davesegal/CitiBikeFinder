@@ -20,8 +20,6 @@ NSString *const kCBFDistanceText = @"text";
 
 @implementation CBFDistance
 
-@synthesize value = _value;
-@synthesize text = _text;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict

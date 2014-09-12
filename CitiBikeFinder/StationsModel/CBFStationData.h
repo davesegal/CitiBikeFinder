@@ -9,7 +9,7 @@
 
 
 
-@interface CBFResults : NSObject <NSCoding, NSCopying>
+@interface CBFStationData : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) NSString *stationAddress;

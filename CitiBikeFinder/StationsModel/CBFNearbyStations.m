@@ -20,9 +20,6 @@ NSString *const kCBFNearbyStationsDistance = @"distance";
 
 @implementation CBFNearbyStations
 
-@synthesize nearbyStationsIdentifier = _nearbyStationsIdentifier;
-@synthesize distance = _distance;
-
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {

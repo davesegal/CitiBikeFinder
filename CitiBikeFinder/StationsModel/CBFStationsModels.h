@@ -5,4 +5,6 @@
 //  Copyright (c) 2014 __MyCompanyName__. All rights reserved.
 //
 
-#import "CBFResults.h"#import "CBFNearbyStations.h"#import "CBFStations.h"
+#import "CBFStationData.h"
+#import "CBFNearbyStations.h"
+#import "CBFStations.h"

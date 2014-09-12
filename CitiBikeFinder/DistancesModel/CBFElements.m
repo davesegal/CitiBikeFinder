@@ -23,10 +23,6 @@ NSString *const kCBFElementsDistance = @"distance";
 
 @implementation CBFElements
 
-@synthesize status = _status;
-@synthesize duration = _duration;
-@synthesize distance = _distance;
-
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {

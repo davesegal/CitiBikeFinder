@@ -45,11 +45,17 @@
                                                     NSDictionary *stationsJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
                                                     CBFStations *stationsModel = [[CBFStations alloc] initWithDictionary:stationsJSON];
                                                     //NSDate *update = [NSDate dateWithTimeIntervalSince1970:stationsModel.lastUpdate];
-                                                    success(stationsModel);
+                                                    dispatch_sync(dispatch_get_main_queue(), ^{
+                                                        success(stationsModel);
+                                                    });
+                                                    
                                                 }
                                                 else
                                                 {
-                                                    failure(error);
+                                                    dispatch_sync(dispatch_get_main_queue(), ^{
+                                                        failure(error);
+                                                    });
+                                                    
                                                 }
                                                 
     }];
@@ -62,7 +68,7 @@
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://maps.googleapis.com/maps/api/distancematrix/json?key=%@&units=imperial&mode=walking&origins=%f,%f&destinations=", CBFApiKeyGoogleDistanceMatrix, origin.latitude, origin.longitude ];
     for (int index = 0; index < 5 && index < [stations.results count]; index++)
     {
-        CBFResults *results = stations.results[index];
+        CBFStationData *results = stations.results[index];
         [urlString appendString:[NSString stringWithFormat:@"%f,%f|", results.latitude, results.longitude]];
     }
     [urlString deleteCharactersInRange:NSMakeRange([urlString length] - 1, 1)];

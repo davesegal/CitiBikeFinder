@@ -5,7 +5,7 @@
 //  Copyright (c) 2014 __MyCompanyName__. All rights reserved.
 //
 
-#import "CBFResults.h"
+#import "CBFStationData.h"
 #import "CBFNearbyStations.h"
 
 
@@ -20,23 +20,14 @@ NSString *const kCBFResultsLabel = @"label";
 NSString *const kCBFResultsNearbyStations = @"nearbyStations";
 
 
-@interface CBFResults ()
+@interface CBFStationData ()
 
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict;
 
 @end
 
-@implementation CBFResults
+@implementation CBFStationData
 
-@synthesize status = _status;
-@synthesize stationAddress = _stationAddress;
-@synthesize longitude = _longitude;
-@synthesize resultsIdentifier = _resultsIdentifier;
-@synthesize availableBikes = _availableBikes;
-@synthesize availableDocks = _availableDocks;
-@synthesize latitude = _latitude;
-@synthesize label = _label;
-@synthesize nearbyStations = _nearbyStations;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -152,7 +143,7 @@ NSString *const kCBFResultsNearbyStations = @"nearbyStations";
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    CBFResults *copy = [[CBFResults alloc] init];
+    CBFStationData *copy = [[CBFStationData alloc] init];
     
     if (copy) {
 

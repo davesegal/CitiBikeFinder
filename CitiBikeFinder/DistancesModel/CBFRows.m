@@ -20,7 +20,6 @@ NSString *const kCBFRowsElements = @"elements";
 
 @implementation CBFRows
 
-@synthesize elements = _elements;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict

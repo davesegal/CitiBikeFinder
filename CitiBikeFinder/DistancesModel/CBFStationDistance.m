@@ -23,10 +23,6 @@ NSString *const kCBFStationDistanceRows = @"rows";
 
 @implementation CBFStationDistance
 
-@synthesize status = _status;
-@synthesize originAddresses = _originAddresses;
-@synthesize destinationAddresses = _destinationAddresses;
-@synthesize rows = _rows;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict

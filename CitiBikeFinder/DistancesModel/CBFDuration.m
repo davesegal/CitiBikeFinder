@@ -20,9 +20,6 @@ NSString *const kCBFDurationText = @"text";
 
 @implementation CBFDuration
 
-@synthesize value = _value;
-@synthesize text = _text;
-
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {

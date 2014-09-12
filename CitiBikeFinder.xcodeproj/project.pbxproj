@@ -15,7 +15,7 @@
 		443EAB9219B2C39C006495BA /* CitiBikeFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB9119B2C39C006495BA /* CitiBikeFinderTests.m */; };
 		443EAB9F19B2C420006495BA /* CBFApiRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EAB9E19B2C420006495BA /* CBFApiRequest.m */; };
 		443EABA819B2C726006495BA /* CBFNearbyStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EABA219B2C726006495BA /* CBFNearbyStations.m */; };
-		443EABA919B2C726006495BA /* CBFResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EABA419B2C726006495BA /* CBFResults.m */; };
+		443EABA919B2C726006495BA /* CBFStationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EABA419B2C726006495BA /* CBFStationData.m */; };
 		443EABAA19B2C726006495BA /* CBFStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 443EABA619B2C726006495BA /* CBFStations.m */; };
 		443EABAE19B2DF92006495BA /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443EABAD19B2DF92006495BA /* GoogleMaps.framework */; };
 		443EABB019B2DFD4006495BA /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 443EABAF19B2DFD4006495BA /* GoogleMaps.bundle */; };
@@ -38,6 +38,7 @@
 		446B794819BCA4500066ED9E /* CBFRows.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794119BCA4500066ED9E /* CBFRows.m */; };
 		446B794919BCA4500066ED9E /* CBFStationDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794319BCA4500066ED9E /* CBFStationDistance.m */; };
 		446B794C19BCA4C10066ED9E /* CBFApiKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 446B794B19BCA4C10066ED9E /* CBFApiKeys.m */; };
+		44E9C7FA19C2612A0037620B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E9C7F919C2612A0037620B /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +68,8 @@
 		443EAB9E19B2C420006495BA /* CBFApiRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFApiRequest.m; sourceTree = "<group>"; };
 		443EABA119B2C726006495BA /* CBFNearbyStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFNearbyStations.h; sourceTree = "<group>"; };
 		443EABA219B2C726006495BA /* CBFNearbyStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFNearbyStations.m; sourceTree = "<group>"; };
-		443EABA319B2C726006495BA /* CBFResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFResults.h; sourceTree = "<group>"; };
-		443EABA419B2C726006495BA /* CBFResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFResults.m; sourceTree = "<group>"; };
+		443EABA319B2C726006495BA /* CBFStationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStationData.h; sourceTree = "<group>"; };
+		443EABA419B2C726006495BA /* CBFStationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFStationData.m; sourceTree = "<group>"; };
 		443EABA519B2C726006495BA /* CBFStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStations.h; sourceTree = "<group>"; };
 		443EABA619B2C726006495BA /* CBFStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFStations.m; sourceTree = "<group>"; };
 		443EABA719B2C726006495BA /* CBFStationsModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStationsModels.h; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		446B794419BCA4500066ED9E /* CBFStationDistanceModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFStationDistanceModels.h; sourceTree = "<group>"; };
 		446B794A19BCA4C10066ED9E /* CBFApiKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFApiKeys.h; sourceTree = "<group>"; };
 		446B794B19BCA4C10066ED9E /* CBFApiKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFApiKeys.m; sourceTree = "<group>"; };
+		44E9C7F919C2612A0037620B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E9C7FA19C2612A0037620B /* MapKit.framework in Frameworks */,
 				443EABC919B2E298006495BA /* libz.dylib in Frameworks */,
 				443EABC719B2E0E6006495BA /* SystemConfiguration.framework in Frameworks */,
 				443EABC519B2E0D7006495BA /* QuartzCore.framework in Frameworks */,
@@ -204,8 +207,8 @@
 			children = (
 				443EABA119B2C726006495BA /* CBFNearbyStations.h */,
 				443EABA219B2C726006495BA /* CBFNearbyStations.m */,
-				443EABA319B2C726006495BA /* CBFResults.h */,
-				443EABA419B2C726006495BA /* CBFResults.m */,
+				443EABA319B2C726006495BA /* CBFStationData.h */,
+				443EABA419B2C726006495BA /* CBFStationData.m */,
 				443EABA519B2C726006495BA /* CBFStations.h */,
 				443EABA619B2C726006495BA /* CBFStations.m */,
 				443EABA719B2C726006495BA /* CBFStationsModels.h */,
@@ -218,6 +221,7 @@
 		443EABB119B2DFF6006495BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44E9C7F919C2612A0037620B /* MapKit.framework */,
 				443EABC819B2E298006495BA /* libz.dylib */,
 				443EABC619B2E0E6006495BA /* SystemConfiguration.framework */,
 				443EABC419B2E0D7006495BA /* QuartzCore.framework */,
@@ -365,7 +369,7 @@
 				443EAB7E19B2C39C006495BA /* AppDelegate.m in Sources */,
 				446B794819BCA4500066ED9E /* CBFRows.m in Sources */,
 				446B793819BA1B9C0066ED9E /* CBFStations+StationsSingleton.m in Sources */,
-				443EABA919B2C726006495BA /* CBFResults.m in Sources */,
+				443EABA919B2C726006495BA /* CBFStationData.m in Sources */,
 				443EAB7B19B2C39C006495BA /* main.m in Sources */,
 				446B794519BCA4500066ED9E /* CBFDistance.m in Sources */,
 				446B794719BCA4500066ED9E /* CBFElements.m in Sources */,
