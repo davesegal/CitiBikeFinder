@@ -1,14 +1,9 @@
 CitiBikeFinder
 ==============
 
-You will need to implement your own "CBFApiKeys.m" to build.
+You will need to implement your own "CBFApiKeys.m" with the following two constants defined in order to build.
 
-example:
+NSString *const CBFApiKeyGoogleMaps = @"<i>your map key here</i>";<br>
+NSString *const CBFApiKeyGoogleDistanceMatrix = @"<i>your distance matrix key here</i>";
 
-NSString *const CBFApiKeyGoogleMaps = @"your map key here";
 
-NSString *const CBFApiKeyGoogleDistanceMatrix = @"your distance matrix key here";
-
-@implementation CBFApiKeys
-
-@end
