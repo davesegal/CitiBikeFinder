@@ -38,7 +38,6 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     [super viewDidLoad];
 
     self.mode = self.travelStateControl.selectedSegmentIndex;
-    
     self.closestStations = [NSArray array];
     self.markers = [NSMutableDictionary dictionary];
     
@@ -62,49 +61,6 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     [super didReceiveMemoryWarning];
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *currentLocation = [locations lastObject];
-    if (self.lastLocation.coordinate.longitude == currentLocation.coordinate.longitude && self.lastLocation.coordinate.latitude == currentLocation.coordinate.latitude)
-        return;
-    
-    //NSLog(@"new location %@", self.lastLocation);
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude
-                                                            longitude:currentLocation.coordinate.longitude
-                                                                 zoom:6];
-    if (!self.googleMapView)
-    {
-        self.googleMapView = [GMSMapView mapWithFrame:self.mapView.frame camera:camera];
-        self.googleMapView.myLocationEnabled = YES;
-        [self.googleMapView animateToZoom:16];
-    }
-    else
-    {
-        [self.googleMapView animateToLocation:currentLocation.coordinate];
-    }
-    
-    [self.mapView addSubview:self.googleMapView];
-    
-    if (self.allStations)
-        [self placeStationLocations:self.allStations highlightResult:nil];
-    
-    self.lastLocation = [locations lastObject];
-
-}
-
--(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    NSLog(@"location manager auth change status %u", status);
-    switch (status) {
-        case kCLAuthorizationStatusDenied:
-            //TODO: status authorization denied
-            break;
-            
-        default:
-            break;
-    }
-    
-}
 
 -(void)getStationData
 {
@@ -121,7 +77,7 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
          //
      } failure:^(NSError *error)
      {
-         
+         //TODO: implement error handling
          
      }];
 }
@@ -149,12 +105,13 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
             else
             {
                 marker = [GMSMarker markerWithPosition:coordinate];
+                marker.map = self.googleMapView;
+                marker.title = stationData.stationAddress;
+                marker.flat = YES;
                 [self.markers setObject:marker forKey:key];
             }
             
-            marker.title = stationData.stationAddress;
-            marker.flat = YES;
-            marker.map = self.googleMapView;
+            
             if([stationData.label isEqualToString:selectedStationData.label])
             {
                 marker.icon = [GMSMarker markerImageWithColor:[UIColor blueColor]];
@@ -239,6 +196,52 @@ typedef NS_ENUM(NSInteger, CBFTravelMode)
     
     return NO;
 }
+
+#pragma mark - Location manager
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *currentLocation = [locations lastObject];
+    if (self.lastLocation.coordinate.longitude == currentLocation.coordinate.longitude && self.lastLocation.coordinate.latitude == currentLocation.coordinate.latitude)
+        return;
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude
+                                                            longitude:currentLocation.coordinate.longitude
+                                                                 zoom:6];
+    if (!self.googleMapView)
+    {
+        self.googleMapView = [GMSMapView mapWithFrame:self.mapView.frame camera:camera];
+        self.googleMapView.myLocationEnabled = YES;
+        [self.googleMapView animateToZoom:16];
+    }
+    else
+    {
+        [self.googleMapView animateToLocation:currentLocation.coordinate];
+    }
+    
+    [self.mapView addSubview:self.googleMapView];
+    
+    if (self.allStations)
+        [self placeStationLocations:self.allStations highlightResult:nil];
+    
+    self.lastLocation = [locations lastObject];
+    
+}
+
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSLog(@"location manager auth change status %u", status);
+    switch (status) {
+        case kCLAuthorizationStatusDenied:
+            //TODO: status authorization denied
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 
 #pragma mark - UIButton actions
 
